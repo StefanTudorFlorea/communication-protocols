@@ -1,0 +1,9 @@
+{
+    "name": "communication-protocols",
+    "version": "1.0",
+    "dependencies": [
+      "fmt",
+      "grpc",
+      "protobuf"
+    ]
+}
