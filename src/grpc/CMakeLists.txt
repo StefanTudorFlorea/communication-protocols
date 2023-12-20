@@ -1,7 +1,14 @@
 # generate proto 
 set(PROTO_FILES proto/greeter.proto)
 add_library(proto ${PROTO_FILES})
-target_link_libraries(proto PUBLIC protobuf::libprotobuf gRPC::grpc gRPC::grpc++ gRPC::grpc++_reflection)
+target_link_libraries(proto 
+    PUBLIC 
+        protobuf::libprotobuf 
+        gRPC::grpc 
+        gRPC::grpc++
+        "$<LINK_LIBRARY:WHOLE_ARCHIVE,gRPC::grpc++_reflection>"
+)
+
 target_include_directories(proto PUBLIC ${CMAKE_CURRENT_BINARY_DIR})
 
 # generate proto files
@@ -11,4 +18,4 @@ protobuf_generate(TARGET proto LANGUAGE grpc GENERATE_EXTENSIONS .grpc.pb.h .grp
 
 # gprc
 add_executable(grpc src/main.cpp)
-target_link_libraries(grpc PRIVATE proto gRPC::grpc++_reflection)
+target_link_libraries(grpc PRIVATE proto)
